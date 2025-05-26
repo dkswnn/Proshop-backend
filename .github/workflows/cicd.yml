@@ -21,6 +21,10 @@ jobs:
     steps:
       - name: Pull image from DockerHub
         run: docker pull myagmarsurenmike/mern-app:latest
+      - name: Stop existing container
+        run: docker stop mern-app || true # Continue if container doesn't exist
+      - name: Remove existing container
+        run: docker rm mern-app || true # Continue if container doesn't exist
       - name: Run Docker container
         run: docker run -d -p 8000:8000 --name mern-app -e MONGO_PASSWORD='${{secrets.MONGO_PASSWORD}}' myagmarsurenmike/mern-app
 
