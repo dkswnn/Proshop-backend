@@ -19,7 +19,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: 'http://localhost:3000', // Allow frontend to access backend
+    origin: ['http://localhost:3000', 'http://51.21.1.50:3000'],
     credentials: true, // Allow cookies & authentication headers
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
