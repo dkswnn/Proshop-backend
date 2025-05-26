@@ -22,5 +22,5 @@ jobs:
       - name: Pull image from DockerHub
         run: docker pull myagmarsurenmike/mern-app:latest
       - name: Run Docker container
-        run: docker run -d -p 8000:8000 --name mern-app -e MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }} myagmarsurenmike/mern-app:latest
+        run: docker run -d -p 8000:8000 --name mern-app -e MONGO_PASSWORD='${{secrets.MONGO_PASSWORD}}' myagmarsurenmike/mern-app
 
