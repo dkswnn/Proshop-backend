@@ -17,14 +17,20 @@ jobs:
         run: docker push dkswnn/mernsda:latest    
   deploy:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: self-hosted  # Now this will work!
     steps:
       - name: Pull image from DockerHub
         run: docker pull dkswnn/mernsda:latest
       - name: Stop existing container
-        run: docker stop mernsda || true # Continue if container doesn't exist
+        run: docker stop mernsda || true
       - name: Remove existing container
-        run: docker rm mernsda || true # Continue if container doesn't exist
+        run: docker rm mernsda || true
       - name: Run Docker container
-        run: docker run -d -p 8000:8000 --name mernsda -e MONGO_PASSWORD='${{secrets.MONGO_PASSWORD}}' dkswnn/mernsda
+        run: |
+          docker run -d -p 8000:8000 --name mernsda \
+            -e MONGO_URI='${{ secrets.MONGO_URI }}' \
+            -e JWT_SECRET='${{ secrets.JWT_SECRET }}' \
+            -e NODE_ENV='production' \
+            -e PORT=8000 \
+            dkswnn/mernsda
 
